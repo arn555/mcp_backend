@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const path = require("path");
+require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -7,22 +8,19 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: "arnzkie909@gmail.com",
-    pass: "svungmyhlpgcoboz", 
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS, 
   },
 });
 
 const sendEmail = async (req, res) => {
-  const { to, subject, text } = req.body;
+  const { to, subject, text, from } = req.body;
 
   const mailOptions = {
-    from: {
-      name: 'Web Wizard',
-      address: 'arnzkie909@gmail.com',
-    },
-    to: to || 'arnzkie909@gmail.com',
-    subject: subject || "Default Subject",
-    text: text || "This is the default email body.",
+    from: from,
+    to: to ,
+    subject: subject ,
+    text: text ,
     //If only needed
     // attachments: [
     //   {
